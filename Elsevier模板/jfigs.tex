@@ -1,0 +1,54 @@
+\documentclass{article}
+
+\usepackage[paperwidth=15cm,paperheight=15cm,margin=5pt]{geometry}
+\usepackage{amsmath,enum,amssymb,amsfonts,mathrsfs,amsbsy,pxfonts,array,url}
+%\usepackage[pdftex]{xcolor}
+
+\usepackage{pdfwidgets}
+
+\pagestyle{empty}
+
+\usepackage[createtips]{fancytooltips}
+
+\makeatletter
+\def\bs{\expandafter\@gobble\string\\}
+\def\lb{\expandafter\@gobble\string\{}
+\def\rb{\expandafter\@gobble\string\}}
+
+\newcounter{Page}
+
+\long\def\Clear#1#2{\stepcounter{Page}%
+    \global\setbox0=\hbox to #1{%
+		 \vbox{\hsize=#1%
+		  #2}}%
+		\def\rulecolor{Olive}%
+		\def\rulewidth{0pt}%
+    \xdef\xwd{\the\wd0} \xdef\xht{\the\ht0}%
+%		\typeout{WD=\the\wd0:::::::: HT=\the\ht0}%
+    \pdfpagewidth=#1 \advance\pdfpagewidth by 30pt
+    \pdfpageheight=\xht \advance\pdfpageheight by 34pt
+		\@tempdimc=#1 \advance\@tempdimc 16pt
+		\noindent\begin{tikzpicture}%
+		\node[fill=gray!20,shape=quotedbox,inner color=black,
+		      outer color=black!20,very nearly transparent,%
+		      inner sep=4pt,text width=\@tempdimc] (x) {%
+		\def\rulecolor{black!20}%
+		\def\rulewidth{1pt}%
+		\advance\@tempdimc -16pt
+		\noindent\begin{tikzpicture}
+	  \node[fill=yellow!10,draw,opaque,shape=quotedbox,
+		 inner sep=8pt,text width=\@tempdimc] (x) 
+		 {\box0} ;
+ 	  \end{tikzpicture}} ;%
+		\end{tikzpicture}
+%    \box0
+    \keytip{mytip\thePage}\newpage}
+    
+\makeatother
+\pdfcompresslevel=0
+\begin{document}
+
+\input mytools.tex
+
+\end{document}
+

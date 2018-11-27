@@ -1,0 +1,925 @@
+%%                                   
+%%
+%% This is file `docscreen.sty',
+%%
+%% File: docscreen.sty Copyright (c) 2008 C. V. Radhakrishnan
+%%                                   <cvr@river-valley.org> 
+%%    
+%% This package may be distributed under the terms of the LaTeX Project 
+%% Public License, as described in lppl.txt in the base LaTeX distribution.
+%% Either version 1.0 or, at your option, any later version.
+%%
+\NeedsTeXFormat{LaTeX2e}
+\def\fileversion{v.1.0}\def\filedate{2008/07/07}
+\ProvidesPackage{docscreen}
+          [\filedate\space\fileversion\space  screen PDF design (CVR)]
+\RequirePackage{graphicx}
+\RequirePackage{color,calc}
+\RequirePackage{comment}
+\newcounter{panel}
+\newif\if@screen    \@screenfalse
+\newif\if@print     \@printfalse
+\newif\if@sidebar   \@sidebarfalse
+\newif\if@samepage  \@samepagefalse
+\newif\if@nocfg     \@nocfgfalse
+\newif\if@orange    \@orangefalse
+\newif\if@bluelace  \@bluelacefalse
+\newif\if@chocolate \@chocolatefalse
+\newif\if@palegreen \@palegreenfalse
+\newif\if@blue      \@bluefalse
+\newif\if@gray      \@grayfalse
+\newif\if@default   \@defaultfalse
+\newif\if@paneltoc  \@paneltocfalse
+\newif\if@code      \@codefalse
+\newif\if@sectionbreak\@sectionbreakfalse
+\newcounter{driver} \newcounter{scheme}
+\DeclareOption{pdftex}{\setcounter{driver}{0}}
+\DeclareOption{dvips}{\setcounter{driver}{1}}
+\DeclareOption{nocfg}{\@nocfgtrue}
+\DeclareOption{panelleft}{\setcounter{panel}{1}}
+\DeclareOption{leftpanel}{\setcounter{panel}{1}}
+\DeclareOption{panelright}{\setcounter{panel}{2}}
+\DeclareOption{rightpanel}{\setcounter{panel}{2}}
+\DeclareOption{vpanel}{\setcounter{panel}{3}}
+\DeclareOption{nopanel}{\setcounter{panel}{0}}
+\DeclareOption{print}{\@printtrue}
+\DeclareOption{screen}{\@screentrue}
+\DeclareOption{sidebar}{\setcounter{panel}{1}}
+\DeclareOption{nopanel}{\setcounter{panel}{0}}
+\DeclareOption{paneltoc}{\@paneltoctrue}
+\DeclareOption{code}{\@codetrue}
+\DeclareOption{sectionbreak}{\@sectionbreaktrue}
+\def\DOCSCR@Warning#1{}%\PackageWarning{docscreen}{#1}}
+\def\DOCSCR@Info#1{}%\PackageInfo{docscreen}{#1}}
+\def\DOCSCR@WarningNoLine#1{}%\PackageWarningNoLine{docscreen}{#1}}
+  \def\paneltitlepagename#1{\gdef\@Paneltitlepagename{#1}}
+  \def\panlabstractname#1{\gdef\@Panelabstractname{#1}}
+  \def\panelcontentsname#1{\gdef\@Panelcontentsname{#1}}
+  \def\panelhomepagename#1{\gdef\@Panelhomepagename{#1}}
+  \def\panelfullscreenname#1{\gdef\@Panelfullscreenname{#1}}
+  \def\panelgobackname#1{\gdef\@Panelgobackname{#1}}
+  \def\panelclosename#1{\gdef\@Panelclosename{#1}}
+  \def\panelquitname#1{\gdef\@Panelquitname{#1}}
+  \def\panelpagename#1{\gdef\@Panelpagename{#1}}
+  \def\panelofname#1{\gdef\@Panelofname{#1}}
+  \let\@Paneltitlepagename\@empty \let\@Panelabstractname\@empty
+  \let\@Panelcontentsname\@empty  \let\@Panelhomepagename\@empty
+  \let\@Panelgobackname\@empty    \let\@Panelgobackname\@empty
+  \let\@Panelquitname\@empty      \let\@Panelclosename\@empty
+  \let\@Panelpagename\@empty      \let\@Panelofname\@empty
+  \let\@Panelfullscreenname\@empty
+  \paneltitlepagename{Title Page}
+  \panlabstractname{Abstract}
+  \panelcontentsname{Contents}
+  \panelfullscreenname{Full Screen}
+  \panelhomepagename{Home Page}
+  \panelgobackname{Go Back}
+  \panelclosename{Close}
+  \panelquitname{Quit}
+  \panelpagename{Page}
+  \panelofname{of}
+\ProcessOptions
+%******** Screen options starts here *****************
+\if@screen
+\@ifundefined{hyperref}{%
+ \ifcase\thedriver\RequirePackage[pdftex]{hyperref}\or
+  \RequirePackage[dvips]{hyperref}\or
+  \RequirePackage[dvipsone]{hyperref}\or
+  \RequirePackage[dvipdf]{hyperref}\or
+  \RequirePackage[dvipdfm]{hyperref}\or
+  \RequirePackage[dviwindo]{hyperref}\or
+  \RequirePackage[ps2pdf]{hyperref}\or
+  \RequirePackage[vtex]{hyperref}\or
+ \DOCSCR@Warning{Unknown backend driver}
+ \fi}
+ {\DOCSCR@Warning{hyperref already loaded}}
+\hypersetup{pagebackref,pdfpagemode=none,colorlinks,%
+             pdfmenubar=false,%
+             pdftoolbar=false,%
+             pdffitwindow=true,pdfcenterwindow=true,%
+             pdfwindowui=false,menucolor=menucolor,%
+             pdfview=Fit,pdfstartview=Fit,backref}
+\includecomment{screen}
+\excludecomment{print}
+\def\ScreenLastPage{100}
+  \definecolor{coxcolor}{rgb}{1,.937,.835}
+  \definecolor{boxcolor}{rgb}{.001,0,.502}
+  \definecolor{bboxcolor}{rgb}{.9,.941,.902}
+  \definecolor{rcolor}{rgb}{.439,.502,.565}
+  \definecolor{olivedrab}{rgb}{.42,.557,.137}
+  \definecolor{fcolor}{rgb}{0,1,1}
+  \definecolor{orange}{rgb}{1,.549,0}
+  \definecolor{orange1}{rgb}{1,.5,0}
+  \definecolor{menucolor}{rgb}{1,.25,0}
+  \definecolor{paleblue}{rgb}{0,0,0.1}
+  \definecolor{panelbackground}{rgb}{.455,.832,.979}
+  \definecolor{logobackground}{rgb}{.35,.73,.87}
+  \definecolor{buttonbackground}{rgb}{0,.624,.820}
+  \definecolor{buttonshadow}{rgb}{.001,0,.502}
+  \definecolor{section0}{rgb}{0,.5,.1}
+  \definecolor{section1}{rgb}{0,.5,1}
+  \definecolor{section2}{rgb}{0,.5,.7}
+  \definecolor{section3}{rgb}{0,.5,.4}
+  \definecolor{section4}{rgb}{.4,.5,.2}
+  \definecolor{section5}{rgb}{.5,.5,.3}
+
+%
+%------------------------ Macros for code listing --------------
+\if@code
+\def\verbatim@font{%
+  \normalfont \ttfamily\small
+  \color{section0}
+  \catcode`\<=\active
+  \catcode`\>=\active
+}
+\begingroup
+  \catcode`\<=\active
+  \catcode`\>=\active
+  \gdef<{\@ifnextchar<\@lt\@meta}
+  \gdef>{\@ifnextchar>\@gt\@gtr@err}
+  \gdef\@meta#1>{\@PDFm{#1}}
+  \gdef\@lt<{\char`\<}
+  \gdef\@gt>{\char`\>}
+\endgroup
+\def\@gtr@err{%
+   \DOCSCR@Warning{%
+      Isolated \protect>\MessageBreak%
+      In this document class, \protect<...\protect>\MessageBreak
+      is used to indicate a parameter.\MessageBreak
+      I've just found a \protect> on its own.\MessageBreak
+      Perhaps you meant to type \protect>\protect>?
+   }%
+}
+\def\verbatim@nolig@list{\do\`\do\,\do\'\do\-}
+\def\@PDFm#1{\mbox{\color{red}$\langle$\it#1\/$\rangle$}}
+\def\arg#1{{\color{section1}{\tt\string{}\@PDFm{#1}{\tt\string}}}}
+\def\@PDFM#1{\mbox{\color{red}\it#1\/}}
+\def\Arg#1{{\color{section1}{\tt\string{}\@PDFM{#1}{\tt\string}}}}
+\def\oarg#1{{\color{section1}{\tt[}\@PDFm{#1}{\tt]}}}
+\def\Oarg#1{{\color{section1}{\tt[}\@PDFM{#1}{\tt]}}}
+ \definecolor{wheat}{rgb}{.96, .87, .70}
+ \definecolor{oldlace}{rgb}{.992, .96187, .902}
+ \definecolor{snow}{rgb}{1, .98, .98}
+ \definecolor{ghostwhite}{rgb}{.973, .973, 1}
+ \definecolor{cornsilk}{rgb}{1, .973, .863}
+ \definecolor{honeydew}{rgb}{.941, 1, .941}
+ \definecolor{lavenderdark}{rgb}{.8, .8, .9529411}
+ \definecolor{lavender}{rgb}{.902, .902, .980}
+ \definecolor{lightblue}{rgb}{.8, .8, .95}
+ \definecolor{lightgray}{rgb}{.827, .827, .827}
+ \definecolor{lightsteelblue}{rgb}{.690, .769, .871}
+ \definecolor{lightturquoise}{rgb}{.686, .933, .933}
+ \definecolor{darkgreen}{rgb}{.0, .392, .0}
+ \definecolor{yellowgreen}{rgb}{.604, .804, .196}
+ \definecolor{vlightblue}{rgb}{.88, .85, .95}
+ \definecolor{khaki}{rgb}{.741, .718, .42}
+\@ifundefined{rowcolor}{}{\arrayrulecolor{section1}}
+\definecolor{tabcolor}{rgb}{.973, .973, 1}
+\@ifundefined{decl}{%
+\newenvironment{decl}[1][]%
+    {\par\small\addvspace{1.5ex plus .5ex minus .5ex}%
+     \vskip -\parskip
+     \noindent\hspace{-\leftmarginii}%
+     \bgroup\begin{tabular}{|>{\columncolor{tabcolor}}l|}\hline\\[-6pt]
+      \ignorespaces}%
+    {\\[3pt]\hline\end{tabular}\egroup\par%
+     \vspace{1.5ex}\ignorespacesafterend\noindent}}{}
+\RequirePackage{shortvrb}
+\MakeShortVerb{\|}
+\fi %---------- end of \if@code option ----------
+%
+%-------------- Button macros -------------
+%
+\@ifundefined{@PDFbox}{\newbox\@PDFbox}{}
+\@ifundefined{@tempdimc}{\newdimen\@tempdimc}{}
+\newdimen\shadowsize
+\shadowsize 1pt
+\def\shadowbox{\PDFBox\@shadowbox}
+\def\@shadowbox#1{%
+  \setbox\@PDFbox\hbox{\fbox{#1}}%
+  \leavevmode\vbox{%
+    \offinterlineskip
+    \dimen@=\shadowsize
+    \advance\dimen@ .5\fboxrule
+    \hbox{\copy\@PDFbox\kern-.5\fboxrule\lower\shadowsize\hbox{%
+      \vrule \@height\ht\@PDFbox \@depth\dp\@PDFbox \@width\dimen@}}%
+    \vskip-\dimen@
+    \moveright\shadowsize\vbox{%
+      \hrule \@width\wd\@PDFbox \@height\dimen@}}}
+\newtoks\do@PDFBox
+\def\PDFBox#1{%
+  \do@PDFBox{#1}%
+  \afterassignment\begin@PDFBox
+  \setbox\@PDFbox=\hbox}
+\def\begin@PDFBox{\aftergroup\end@PDFBox}
+\def\end@PDFBox{\the\do@PDFBox{\box\@PDFbox}}%
+%
+  \definecolor{buttondisable}{gray}{.7}
+  \definecolor{Gray}{rgb}{.895,.93,.916}
+  \def\FBlack{\ifnum\thepage=1\color{buttondisable}\else\Black\fi}
+  \def\LBlack{\ifnum\thepage=\number\ScreenLastPage\color{buttondisable}%
+      \else\Black\fi}
+  \def\ContPage{2}
+  \def\DBlack{\ifnum\thepage=\number\ContPage\color{buttondisable}%
+      \else\Black\fi}
+  \def\Black{\color{black}}
+    \def\contentsname{\protect\hypertarget{contents}{\@Panelcontentsname}
+      \immediate\write\@auxout{\string\gdef\string\ContPage{\thepage}}}
+    \def\abstractname{\protect\hypertarget{abstract}{\@Panelabstractname}}
+    \def\emailid#1{\def\@emailid{mailto:#1}}
+    \def\urlid#1{\def\@urlid{http://#1}}
+    \def\markboth#1#2{\gdef\lmark{#1}\gdef\rmark{#2}}
+    \def\emblema#1{\def\@emblema{#1}}
+    \def\@grerr{\phantom{XXXXXXXX}}
+    \def\affname#1{\def\@affname{#1}}
+    \def\@afferr{Name of Organization}
+    \def\@diverr{Name of Division}
+    \def\divname#1{\def\@divname{#1}}
+    \newlength\panelwidth
+    \ifnum\thepanel>0%
+     \setlength\panelwidth{.15\paperwidth}%%.25
+      \ifdim\panelwidth<1in\setlength\panelwidth{1in}\fi\else
+     \setlength\panelwidth{0pt}
+    \fi
+  \fboxsep0pt\fboxrule.2pt
+  \RequirePackage{amssymb,amsbsy}
+  \def\btl{\ensuremath{\blacktriangleleft}}
+  \def\rtl{\ensuremath{\blacktriangleright}}
+\def\panelfont{\fontsize{7pt}{7pt}\itshape\selectfont}
+\def\st{\hbox{\vrule height10pt depth5pt width\z@}\panelfont}
+\def\addButton#1#2{\begingroup\normalsfcodes\fboxsep0pt\fboxrule.4pt\shadowsize.4pt%
+       \sffamily\color{white}\shadowbox{\colorbox{buttonbackground}%
+       {\hbox to #1{\hfil\Black\st#2\hfil}}\color{buttonshadow}}\endgroup}
+%
+%------------ Panel macros ----------------
+%
+\def\paneloverlay#1{\gdef\@paneloverlay{#1}}
+\def\paneloverlayempty{\let\@paneloverlay\@empty}
+\let\@paneloverlay\@empty
+\def\@panel{%
+     \begingroup\normalsfcodes\ifx\@paneloverlay\@empty%
+      \colorbox{panelbackground}{\panel}%
+   \else%
+    \vbox to\z@{\hbox to\z@{\includegraphics[width=\panelwidth,%%
+        height=\panelheight]{\@paneloverlay}%
+       \hspace{-\panelwidth}\hfill}\vspace{-\panelheight}\vfill}%
+   \panel\fi%
+  \endgroup}%
+
+
+\def\panel{%
+     \begin{minipage}[t][\panelheight][c]{\panelwidth}%
+%       \normalsfcodes%
+%       \centering%
+%      \if@paneltoc%
+%       \@panel@toc\par\vfill\else\relax\fi%
+      \NavigationPanel
+     \end{minipage}%
+}
+\def\vpaneloverlay#1{\gdef\@vpaneloverlay{#1}}
+\def\vpaneloverlayempty{\let\@vpaneloverlay\@empty}
+\let\@vpaneloverlay\@empty
+\def\@vpanel{%
+     \begingroup\normalsfcodes\ifx\@vpaneloverlay\@empty%
+      \colorbox{panelbackground}{\vpanel}%
+   \else%
+    \vbox to\z@{\hbox to\z@{\includegraphics[width=\paperwidth,%%
+        height=\vpanelheight]{\@vpaneloverlay}%
+       \hspace{-\paperwidth}\hfill}\vspace{-\vpanelheight}\vfill}%
+   \vpanel\fi%
+  \endgroup}%
+
+
+\def\vpanel{%
+       \begin{minipage}[t][\vpanelheight][c]{\paperwidth}%
+       \normalsfcodes%
+   \par\vfill
+   \null\vspace*{1pt}
+   \end{minipage}%
+}
+%
+
+%
+\def\imageButton#1#2#3{\includegraphics[width=#1,height=#2]{#3}}
+\newdimen\buttonwidth\newdimen\smallbuttonwidth
+\setlength\buttonwidth{.7\panelwidth}
+\setlength\smallbuttonwidth{.35\panelwidth}
+\addtolength{\smallbuttonwidth}{-1.2pt}
+\def\NavigationPanel{\normalsfcodes%
+     \href{\@urlid}{\addButton{\buttonwidth}{\@Panelhomepagename}}\\ \pfill
+     \Acrobatmenu{FirstPage}{\addButton{\buttonwidth}{\FBlack\@Paneltitlepagename}}\\\pfill
+     \if@paneltoc\relax\else%
+      \hyperlink{contents}{\addButton{\buttonwidth}{\DBlack\@Panelcontentsname}}\\\pfill\fi
+     \Acrobatmenu{FirstPage}{\addButton{\smallbuttonwidth}{\FBlack\scalebox{.8}[1.4]{\btl\btl}}}\hspace*{-2pt}
+     \Acrobatmenu{LastPage}{\addButton{\smallbuttonwidth}{\LBlack\scalebox{.8}[1.4]{\rtl\rtl}}}\\\pfill
+     \Acrobatmenu{PrevPage}{\addButton{\smallbuttonwidth}{\FBlack\scalebox{.8}[1.4]{\btl}}}\hspace*{-2pt}
+     \Acrobatmenu{NextPage}{\addButton{\smallbuttonwidth}{\LBlack\scalebox{.8}[1.4]{\rtl}}}\\\pfill
+     \Acrobatmenu{GoToPage}{\addButton{\buttonwidth}{\@Panelpagename\space
+       \textcolor{red}{\thepage}\space\@Panelofname\space
+       \textcolor{red}{\ScreenLastPage}}}\\\pfill
+     \Acrobatmenu{GoBack}{\addButton{\buttonwidth}{\@Panelgobackname}}\\\pfill
+     \Acrobatmenu{FullScreen}{\addButton{\buttonwidth}{\@Panelfullscreenname}}\\\pfill
+     \Acrobatmenu{Close}{\addButton{\buttonwidth}{\@Panelclosename}}\\\pfill
+     \Acrobatmenu{Quit}{\addButton{\buttonwidth}{\@Panelquitname}}\\
+}
+\def\pfill{\vfill}
+%
+%-------------- Verbatim fix -------------
+%
+% This code is provided by DP Story
+\newdimen\@PDFspaceleft
+\def\@PDFpagespace{%
+  \ifdim\pagetotal=0pt
+     \@PDFspaceleft=\vsize
+   \else
+     \@PDFspaceleft=\pagegoal
+     \advance\@PDFspaceleft by-\pagetotal
+ \fi}
+\let\@PDFverbatim\verbatim
+\let\@PDFendverbatim\endverbatim
+\AtBeginDocument{%
+   \def\verbatim{\begingroup\setbox0=\vbox\bgroup
+         \hsize=\linewidth%
+         \@PDFverbatim\verbatim@font}
+   \def\endverbatim{\@PDFendverbatim\egroup
+    \@PDFpagespace\ifdim\@PDFspaceleft>\ht0 
+       \else 
+        \setbox1=\vsplit0 to\@PDFspaceleft
+        \verbatim@font\unvbox1 \penalty\@M
+       \fi
+    \ifvoid0\relax\else\verbatim@font\unvbox0\fi
+    \endgroup}
+  \def\@verb{\@vobeyspaces \frenchspacing\@sverb}
+} 
+
+% end of DPS' code
+%
+%-------------- end of Verbatim fix -------------
+%
+%-------------- Layout macros ------------------- 
+%
+  \newdimen\@Leftmargin   \@Leftmargin=0cm
+  \newdimen\@Rightmargin  \@Rightmargin=0cm
+  \newdimen\@Topmargin    \@Topmargin=0in
+  \newdimen\@Bottommargin \@Bottommargin=0in
+  %
+\setlength\headheight{0pt}
+\setlength\headsep   {0pt}
+\setlength\footskip  {0pt}
+\hoffset=0pt
+\voffset=0pt
+\pagestyle{empty}
+%
+  \def\InitLayout{
+    \setlength{\textwidth}{\paperwidth}
+    \addtolength{\textwidth}{-\@Leftmargin}
+    \addtolength{\textwidth}{-\@Rightmargin}
+    \setlength{\textheight}{\paperheight}
+    \addtolength{\textheight}{-\@Topmargin}
+    \addtolength{\textheight}{-\@Bottommargin}
+    \addtolength{\textheight}{-\headheight}
+    \addtolength{\textheight}{-\headsep}
+    \addtolength{\textheight}{-\footskip}
+    \setlength{\oddsidemargin}{\@Leftmargin}
+    \addtolength{\oddsidemargin}{-1in}
+    \setlength{\evensidemargin}{\@Leftmargin}%{\@Rightmargin}
+    \addtolength{\evensidemargin}{-1in}
+    \setlength{\topmargin}{\@Topmargin}
+    \addtolength{\topmargin}{-1in}
+  }
+  \def\marginsize#1#2#3#4{
+    \@Leftmargin=#1
+    \@Rightmargin=#2
+    \@Topmargin=#3
+    \@Bottommargin=#4
+    \InitLayout
+  }
+\newdimen\Textmarginright
+\newdimen\Textmarginleft
+\newdimen\Textmargintop
+\newdimen\Textmarginbottom
+\newdimen\marginright
+\newdimen\marginleft
+\newdimen\margintop
+\newdimen\marginbottom
+\newdimen\panelheight
+\newdimen\vpanelheight
+\newdimen\LLX
+\newdimen\LLY
+\newdimen\URX
+\newdimen\URY
+\newdimen\calfactor
+\setlength\calfactor{0pt}
+\def\margins#1#2#3#4{%
+    \marginleft=#1
+    \marginright=#2
+    \margintop=#3 
+    \marginbottom=#4
+}
+\def\screensize#1#2{\paperheight=#1%
+    \paperwidth=#2
+    \InitLayout
+\ifcase\thepanel
+  \setlength\Textmarginright{\marginright}
+  \setlength\Textmarginleft{\marginleft}
+  \setlength\Textmargintop{\margintop}
+  \setlength\Textmarginbottom{\marginbottom}
+  \setlength\LLX{\calfactor}
+  \setlength\LLY{\calfactor}
+  \setlength\overlaywidth{\paperwidth}
+  \setlength\URX{\overlaywidth-2\calfactor}
+  \setlength\URY{\paperheight-2\calfactor}
+  \DOCSCR@Info{no panel options loaded}
+\or%ifnum\thepanel=1
+  \setlength\Textmarginright{\marginright}
+  \setlength\Textmarginleft{\panelwidth}
+  \addtolength\Textmarginleft{\marginleft}
+  \setlength\Textmargintop{\margintop}
+  \setlength\Textmarginbottom{\marginbottom}
+  \setlength\LLX{\panelwidth+\calfactor}
+  \setlength\LLY{\calfactor}
+  \setlength\overlaywidth{\paperwidth}
+  \addtolength\overlaywidth{-\panelwidth}
+  \setlength\URX{\overlaywidth-2\calfactor}
+  \setlength\URY{\paperheight-2\calfactor}
+  \DOCSCR@Info{left panel options loaded}
+\or%ifnum\thepanel=2
+  \setlength\Textmarginleft{\marginleft}
+  \setlength\Textmarginright{\panelwidth}
+  \addtolength\Textmarginright{\marginright}
+  \setlength\Textmargintop{\margintop}
+  \setlength\Textmarginbottom{\marginbottom}
+  \setlength\LLX{\calfactor}
+  \setlength\LLY{\calfactor}
+  \setlength\overlaywidth{\paperwidth}
+  \addtolength\overlaywidth{-\panelwidth}
+  \setlength\URX{\overlaywidth-2\calfactor}
+  \setlength\URY{\paperheight-2\calfactor}
+  \DOCSCR@Info{right panel options loaded}
+\or%\thepanel=3
+  \setlength\Textmarginleft{\marginleft}
+  \setlength\Textmarginright{\panelwidth}
+  \addtolength\Textmarginright{\marginright}
+  \setlength\Textmargintop{\margintop}
+  \addtolength\Textmargintop{\vpanelheight}
+  \setlength\Textmarginbottom{\marginbottom}
+  \setlength\LLX{\calfactor}
+  \setlength\LLY{\calfactor}
+  \setlength\overlaywidth{\paperwidth}
+  \addtolength\overlaywidth{-\panelwidth}
+	\setlength\overlayheight{\paperheight}
+	\setlength\panelheight{\paperheight}
+	\addtolength\panelheight{-\vpanelheight}
+	\addtolength\overlayheight{-\vpanelheight}
+  \setlength\URX{\overlaywidth-2\calfactor}
+  \setlength\URY{\paperheight-2\calfactor}
+  \DOCSCR@Info{right panel options loaded} 
+\or\DOCSCR@Warning{Panel specification is undefined}
+\fi
+\marginsize{\Textmarginleft}{\Textmarginright}
+           {\Textmargintop}{\Textmarginbottom}
+\InitLayout
+\DOCSCR@Info{LLX=\the\LLX \MessageBreak
+  LLY=\the\LLY \MessageBreak
+  URX=\the\URX \MessageBreak
+  URY=\the\URY \MessageBreak
+  panelwidth=\the\panelwidth \MessageBreak
+  overlaywidth=\the\overlaywidth \MessageBreak
+  textwidth=\the\textwidth \MessageBreak
+  textheight=\the\textheight \MessageBreak
+  paperwidth=\the\paperwidth \MessageBreak
+  paperheight=\the\paperheight \MessageBreak
+  calfactor=\the\calfactor \MessageBreak
+  Panel=\thepanel}
+}           
+%
+% ------------------ overlaying of images or colors --------
+%
+\let\@PDFSout@Hook\@empty
+\newcommand{\PDFSout}{\g@addto@macro\@PDFSout@Hook}
+\newcommand{\@PDFSout@Out}{%
+   \afterassignment\@PDFSout@Test
+   \global\setbox\@cclv= %
+   }
+\newcommand{\@PDFSout@Test}{%
+   \ifvoid\@cclv\relax
+      \aftergroup\@PDFSout@Output
+   \else
+      \@PDFSout@Output
+   \fi%
+   }
+\newcommand{\@PDFSout@Output}{%
+   \@PDFSout@Hook%
+   \@PDFSout@Org@Out\box\@cclv%
+   }
+\newcommand{\@PDFSout@Org@Out}{}
+\newcommand*{\@PDFSout@Init}{%
+   \let\@PDFSout@Org@Out\shipout
+   \let\shipout\@PDFSout@Out
+   }
+\AtBeginDocument{\@PDFSout@Init}
+\newcommand{\@Overlay@Hook}{}
+\newcommand{\AddToOverlay}{\g@addto@macro\@Overlay@Hook}
+\newcommand{\ClearOverlay}{\let\@Overlay@Hook\@empty}
+\newcommand{\@Overlay}{%
+  \ifx\@Overlay@Hook\@empty
+  \else
+    \bgroup
+      \@tempdima=1in
+      \@tempcnta=\@tempdima
+      \@tempcntb=-\@tempdima
+      \advance\@tempcntb\paperheight
+      \global\setbox\@cclv\vbox{%
+      \vbox{\let\protect\relax%
+        \unitlength=1sp%
+        \pictur@(0,0)(\@tempcnta,\@tempcntb)%
+          \@Overlay@Hook%
+        \endpicture}%
+        \box\@cclv%
+      }%
+    \egroup
+  \fi
+}
+\PDFSout{\@Overlay}
+%------------------- end of overlaying macros --------------
+%
+%------------------- Panel TOC macros ----------------------
+%
+\if@paneltoc
+\DOCSCR@Info{Panel TOC options loaded}
+\RequirePackage{truncate}
+\newcounter{NUM}[page]
+\def\numberline#1{}
+\def\ST{\hbox{\vrule height8pt depth3pt width\z@}\scriptsize\itshape}
+\def\scrShadowButton#1#2{\begingroup\fboxsep0pt\fboxrule.6pt\shadowsize.1pt%
+       \sffamily\color{white}\shadowbox{\colorbox{buttonbackground}%
+       {\hbox to #1{\color{fgcolor}\ST#2\hfill}}\color{buttonshadow}}\endgroup}
+\def\scrNormalButton#1#2{\begingroup\sffamily\color{white}%
+         \noindent{\colorbox{panelbackground}%
+       {\hbox to #1{\color{fgcolor}\ST\hfill#2\hfill}}}\endgroup}
+\def\@@secHead{section}
+\long\def\contentsline#1#2#3#4{\def\@@cHead{#1}%
+   \ifx\@@cHead\@@secHead\stepcounter{NUM}%
+   \ifnum\thepanel@section=\theNUM%
+   {\definecolor{panelbackground}{gray}{.3}%
+    \definecolor{fgcolor}{gray}{1}%
+    \hyperlink{#4}{\,\scrNormalButton{.965\panelwidth}{\truncate{.9\panelwidth}{#2}}}%
+   }\par\vskip1truept%
+   \else
+   {\definecolor{panelbackground}{rgb}{.741, .718, .42}%%
+    \definecolor{fgcolor}{gray}{0}%
+    \hyperlink{#4}{\,\scrNormalButton{.965\panelwidth}{\truncate{.9\panelwidth}{#2}}}%
+   }\par\vskip1truept%
+   \fi\fi}
+ \newcounter{@TOC}
+ \def\PDF@@TOC{\stepcounter{@TOC}\ifnum\the@TOC>1\relax%
+      \else\tableofcontents\fi}
+\def\@panel@toc{\vbox\bgroup\rightskip0pt plus 1fill
+    \hbadness 10000
+    \InputIfFileExists{\jobname.toc}%
+        {\DOCSCR@Info{TOC file read}}%
+        {\DOCSCR@Warning{TOC file not available}%
+        \AtEndDocument{\PDF@@TOC}}%
+       \egroup}
+\fi% --- end of paneltoc option ---
+
+\def\overlay#1{\gdef\@overlay{#1}}
+\def\overlayempty{\let\@overlay\@empty}
+\let\@overlay\@empty
+\def\backgroundcolor#1{\gdef\@backgroundcolor{#1}}
+\backgroundcolor{lightcyan}
+\definecolor{lightcyan}{rgb}{.895,.93,.916}
+\newdimen\overlayheight
+\newdimen\overlaywidth
+\AddToOverlay{%
+   \setlength{\@tempdima}{0pt}
+   \setlength{\@tempdimb}{\paperwidth-2\@tempdima}
+   \setlength{\@tempdimc}{\paperheight-2\@tempdima}
+   \setlength{\unitlength}{1pt}\thinlines%
+   \ifx\@overlay\@empty%
+    \DOCSCR@Warning{No overlay specified\MessageBreak
+     output will have only background color}
+     \put(\strip@pt\LLX,\strip@pt\LLY){%
+     \colorbox{\@backgroundcolor}{%
+       \color{white}\makebox(\strip@pt\URX,\strip@pt\URY)%
+       {}}}
+   \else
+     \put(\strip@pt\@tempdima,\strip@pt\@tempdima){%
+      \makebox(\strip@pt\@tempdimb,\strip@pt\@tempdimc)[bl]%
+      {\includegraphics[width=\overlaywidth,height=\panelheight]{\@overlay}}}%
+   \fi%
+  }%
+\AddToOverlay{%
+    \setlength{\@tempdima}{0mm}%
+    \setlength{\@tempdimb}{\paperwidth-2\@tempdima}%
+    \setlength{\@tempdimc}{\paperheight-2\@tempdima}%
+    \setlength{\unitlength}{1pt}\thinlines%
+     \put(\strip@pt\@tempdima,\strip@pt\@tempdima){%
+      \makebox(\strip@pt\@tempdimb,\strip@pt\@tempdimc)[br]%
+      {\relax\@@@PANEL\relax}}%
+}
+\AddToOverlay{%
+    \setlength{\@tempdima}{0mm}%
+    \setlength{\@tempdimb}{\paperwidth-2\@tempdima}%
+    \setlength{\@tempdimc}{\paperheight-2\@tempdima}%
+    \setlength{\unitlength}{1pt}\thinlines%
+     \put(\strip@pt\@tempdima,\strip@pt\@tempdima){%
+      \makebox(\strip@pt\@tempdimb,\strip@pt\@tempdimc)[tl]%
+      {\relax\@vpanel\relax}}%
+}
+
+
+%
+\def\@@@PANEL{\ifnum\thepanel=1\@panel\hfill\else%
+       \ifnum\thepanel=2\hfill\@panel\else%
+			 \ifnum\thepanel=3\hfill\@panel\else
+       \ifnum\thepanel=0\relax%
+       \fi\fi\fi\fi}%
+%      
+\def\@logo#1{%
+       \global\setbox0=\hbox{\includegraphics{#1}}%
+       \ifdim\ht0>\wd0%
+        \includegraphics[height=.75in]{#1}%
+        \else%
+       \ifdim\wd0>\ht0%
+        \includegraphics[width=.75in]{#1}%
+        \else%
+       \ifdim\wd0=\ht0%%
+        \includegraphics[width=.75in]{#1}%
+       \fi\fi\fi
+}
+\let\@@logo\@logo
+\def\ps@plain{}
+\def\ps@empty{}
+\def\ps@firstpage{}
+\def\ps@headings{}
+\def\ps@myheadings{}
+\def\ps@title{}
+
+\AtEndDocument{%
+   \clearpage   \addtocounter{page}{-1}%
+   \immediate\write\@auxout{\string\gdef\string\ScreenLastPage{\arabic{page}}}%
+   \addtocounter{page}{1}}
+
+%------------------- Section counter coloring ----------------------
+
+\let\old@secnumber\@secnumber
+  \def\@secnumber{\protect\textcolor{section\thesection@level}{\old@secnumber}}%
+  \def\@seccntformat#1{\protect\textcolor{section\thesection@level}%
+     {\expandafter\upshape\csname the#1\endcsname.}\quad}%
+  \def\@secnumfont{\protect\textcolor{section\thesection@level}}%\mdseries}
+  \def\abstractname{\protect\textcolor{blue}{\@Panelabstractname}}
+  \let\o@title\@title
+  \def\@title{\protect\color{orange}\o@title}
+
+  \def\Sectionformat#1#2{%
+   \ifcase#2%
+        {\protect\textcolor{section0}{#1}}%level 0 chapter        { }
+    \or {\protect\textcolor{section1}{#1}}%level 1 section        { }
+    \or {\protect\textcolor{section2}{#1}}%level 2 subsection     { }
+    \or {\protect\textcolor{section3}{#1}}%level 3 subsubsection  { }
+    \or {\protect\textcolor{section4}{#1}}%level 4 paragraph      { }
+    \or {\protect\textcolor{section5}{#1}}%level 5 subparagraph   { }
+   \fi
+  }
+
+  \let\scr@section\section
+  \newcounter{panel@section}
+ \def\section{\if@sectionbreak\clearpage\fi%
+     \stepcounter{panel@section}\scr@section}
+ \def\@linkcolor{red}
+ \def\@anchorcolor{section0}
+ \def\@citecolor{orange}
+ \def\@filecolor{cyan}
+ \def\@urlcolor{magenta}
+ \def\@menucolor{section2}
+ \def\@pagecolor{red}
+ \setcounter{tocdepth}{4}
+ \setcounter{secnumdepth}{4}
+\ifnum\thedriver=0
+ \def\pagedissolve#1{%
+     \edef\@@processme{%
+     \pdfpageattr{%
+        /Trans << /S /#1\space >>%
+      }}%
+     \@@processme 
+    }%
+\else
+ \def\pagedissolve#1{}
+\fi
+\if@nocfg\relax\else\IfFileExists{docscreen.cfg}{\input docscreen.cfg}{}\fi
+\let\notesname\@gobble
+%
+\long\def\buttonbox#1{%
+  \leavevmode
+  \setbox\@tempboxa\hbox{%
+    \color@begingroup
+      \kern\fboxsep{#1}\kern\fboxsep
+    \color@endgroup}%
+  \@buttonframeb@x\relax}
+%
+\def\@buttonframeb@x#1{\begingroup%
+  \@tempdima\fboxrule
+  \advance\@tempdima\fboxsep
+  \advance\@tempdima\dp\@tempboxa
+  \hbox{%
+    \lower\@tempdima\hbox{%
+      \vbox{%
+        \color{white}\hrule\@height\fboxrule\relax
+        \hbox{%
+          \color{white}\vrule\@width\fboxrule\relax
+          #1%
+          \vbox{%
+            \vskip\fboxsep
+            \box\@tempboxa
+            \vskip\fboxsep}%
+          #1%
+          \color{black}\vrule\@width\fboxrule\relax}%
+          \color{black}\hrule\@height\fboxrule\relax}%
+                          }%
+        }%
+\endgroup}
+%
+\def\@pdfcreator{LaTeX with hyperref and docscreen}
+\def\shorttitle#1{\gdef\@shorttitle{#1}}
+\let\@shorttitle\@empty
+\def\@battrib{\color{white}$\bullet$\sffamily\footnotesize\itshape}
+\def\@vattrib{\color{section1}\sffamily\footnotesize\itshape}
+\newif\if@@bb \@@bbfalse
+\newif\if@@tb \@@tbfalse
+\def\topbuttons{\@@tbtrue%
+ \AddToOverlay{\def\@@tbuttons{\@@buttons}%
+  \setlength{\unitlength}{1pt}\thinlines%
+   \put(0,0){\makebox(\strip@pt\paperwidth,\strip@pt\paperheight)[ct]%
+     {\@@tbuttons}%
+    }
+  }
+}
+\def\bottombuttons{\@@bbtrue%
+  \AddToOverlay{\def\@@bbuttons{\@@buttons}%
+   \setlength{\unitlength}{1pt}\thinlines%
+    \put(0,0){\makebox(\strip@pt\paperwidth,24)[cb]%
+     {\@@bbuttons}%
+  }
+ }
+}
+\def\@@buttons{\ifx\@shorttitle\@empty\relax\else%
+       \quad{\@vattrib\@shorttitle}\fi\hfill%
+       \Acrobatmenu{FirstPage} {\@battrib First }         
+       \Acrobatmenu{PrevPage}  {\@battrib Prev }          
+       \Acrobatmenu{NextPage}  {\@battrib Next }          
+       \Acrobatmenu{LastPage}  {\@battrib Last }          
+       \Acrobatmenu{GoBack}    {\@battrib Go Back }       
+       \Acrobatmenu{FullScreen}{\@battrib Full Screen }   
+       \Acrobatmenu{Close}     {\@battrib Close }         
+       \Acrobatmenu{Quit}      {\@battrib Quit }          
+\quad{}\vspace*{1.5pt}}
+\def\nobottombuttons{\let\@@bbuttons\relax}
+\def\notopbuttons{\let\@@tbuttons\relax}
+%
+\newcounter{overlay}
+\def\changeoverlay{\def\section{\if@sectionbreak\clearpage\fi%
+    \stepcounter{panel@section}%
+    \change\scr@section}}%
+ \def\change{\stepcounter{overlay}%
+  \ifnum\c@overlay>10\setcounter{overlay}{1}\fi
+   \overlay{overlay\theoverlay}
+}
+%    
+\fi%--This \fi corresponds to \if@screen
+%-------- Screen options end here ------------------
+%
+%
+%-------- Print options start here -----------------
+%
+\if@print
+\RequirePackage{amssymb}
+\RequirePackage[pdftex,bookmarksopen,colorlinks]{hyperref}
+\def\pagedissolve#1{}
+\let\overlay\@gobble
+\let\paneloverlay\@gobble
+\let\emblema\@gobble
+\let\emblemb\@gobble
+\let\urlid\@gobble
+\let\emailid\@gobble
+\def\screensize#1#2{}
+\includecomment{print}
+\excludecomment{screen}
+ \def\@linkcolor{black}
+ \def\@anchorcolor{black}
+ \def\@citecolor{black}
+ \def\@filecolor{black}
+ \def\@urlcolor{black}
+ \def\@menucolor{black}
+ \def\@pagecolor{black}
+ \definecolor{section0}{gray}{0}
+ \definecolor{section1}{gray}{0}
+ \definecolor{section2}{gray}{0}
+ \definecolor{section3}{gray}{0}
+ \definecolor{section4}{gray}{0}
+ \definecolor{section5}{gray}{0}
+ \definecolor{orange}{gray}{0}
+ \definecolor{panelbackground}{gray}{1}
+ \definecolor{buttondisable}{gray}{.8}
+ \def\margins#1#2#3#4{}
+ \RequirePackage{fancybox}
+\newdimen\@PDFmpht
+\let\@Notesname\@empty
+\def\notesname#1{\gdef\@Notesname{#1}}
+\let\@overlay\@empty
+\newcounter{slide}
+\newcounter{slideoverlay}
+\newenvironment{slide}{\stepcounter{slide}%
+      \stepcounter{slideoverlay}%
+   \ifnum\theslideoverlay=11\setcounter{slideoverlay}{1}
+    \ifx\@overlay\@empty\else
+    \DOCSCR@Warning{Overly counter reset to zero}\fi\fi
+   \ifx\@overlay\@empty\else 
+    \DOCSCR@Warning{Overly file is Not available in print}\fi
+      \par\addvspace{12pt}\noindent%
+      \hspace*{-.1\paperwidth}\begin{minipage}{.9\paperwidth}
+       \global\setbox0=\hbox\bgroup\begin{minipage}[b]{.5\linewidth}}%
+       {\end{minipage}\egroup\setlength\@PDFmpht{\the\ht0}%
+       \typeout{****** height=\the\@PDFmpht*******}
+       \setbox1=\hbox{\begin{minipage}[b][1.05\@PDFmpht][t]{.3\paperwidth}
+       \typeout{****** height=\the\@PDFmpht*******}
+        \centering \@Notesname\par\vfill\end{minipage}}
+       \noindent\parbox{\linewidth}{%\shadowsize=2pt\fboxsep=6pt%
+       \shadowbox{\box0}\quad\fbox{\box1}}
+       \end{minipage}\hspace*{-1.5in}}
+
+ \let\overlayempty\relax
+ \let\paneloverlayempty\relax
+ \let\topbuttons\relax
+ \let\notopbuttons\relax
+ \let\bottombuttons\relax
+ \let\nobottombuttons\relax
+ \let\changeoverlay\relax
+%------------------------ Macros for code listing --------------
+\if@code
+\def\verbatim@font{%
+  \normalfont \ttfamily\small
+  \catcode`\<=\active
+  \catcode`\>=\active
+}
+\begingroup
+  \catcode`\<=\active
+  \catcode`\>=\active
+  \gdef<{\@ifnextchar<\@lt\@meta}
+  \gdef>{\@ifnextchar>\@gt\@gtr@err}
+  \gdef\@meta#1>{\@PDFm{#1}}
+  \gdef\@lt<{\char`\<}
+  \gdef\@gt>{\char`\>}
+\endgroup
+\def\@gtr@err{%
+   \DOCSCR@Warning{%
+      Isolated \protect>\MessageBreak%
+      In this document class, \protect<...\protect>\MessageBreak
+      is used to indicate a parameter.\MessageBreak
+      I've just found a \protect> on its own.\MessageBreak
+      Perhaps you meant to type \protect>\protect>?
+   }%
+}
+\def\verbatim@nolig@list{\do\`\do\,\do\'\do\-}
+\def\@PDFm#1{\mbox{$\langle$\it#1\/$\rangle$}}
+\def\arg#1{{{\tt\string{}\@PDFm{#1}{\tt\string}}}}
+\def\@PDFM#1{\mbox{\it#1\/}}
+\def\Arg#1{{{\tt\string{}\@PDFM{#1}{\tt\string}}}}
+\def\oarg#1{{\tt[}\@PDFm{#1}{\tt]}}
+\def\Oarg#1{{\tt[}\@PDFM{#1}{\tt]}}
+\@ifundefined{decl}{%
+\newenvironment{decl}[1][]%
+    {\par\small\addvspace{1.5ex plus .5ex minus .5ex}%
+     \vskip -\parskip
+     \noindent\hspace{-\leftmarginii}%
+     \bgroup\begin{tabular}{|l|}\hline\\[-6pt]
+      \ignorespaces}%
+    {\\[3pt]\hline\end{tabular}\egroup\par%
+     \vspace{1.5ex}\ignorespacesafterend\noindent}}{}
+\RequirePackage{shortvrb}
+\MakeShortVerb{\|}
+\fi
+%-------------- end of \if@code option ----------
+%
+\def\panelfont{\fontsize{7pt}{7pt}\itshape\selectfont}
+\def\st{\hbox{\vrule height10pt depth5pt width\z@}\panelfont}
+\def\addButton#1#2{\begingroup\normalsfcodes\fboxsep2pt\fboxrule.1pt%
+       \sffamily\fbox{\hbox to #1{\hfil\st#2\hfil}}\endgroup}
+\def\imageButton#1#2#3{\includegraphics[width=#1,height=#2]{#3}}       
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\fi
+%%
+
+\def\includesrc#1{\begingroup\pdfcompresslevel=0
+   \immediate\pdfobj 
+    stream attr {/Type /SourceFile /SourceName (#1)}
+    file{#1}
+   \pdfcatalog{/SourceObject \the\pdflastobj\space 0 R}
+   \endgroup
+   \pdfcompresslevel=9}
+
+\endinput
+%%
+%% End of file docscreen.sty
+%%

@@ -1,0 +1,83 @@
+\Clear{426.79134pt}{%
+\let\la\lambda
+\noindent\textbf{Remark 3.}\enspace
+We remark that; when the ratio $h/\la$ tends to 0, the expression $\la
+L(r,s)=-(s-r)/(4\left(\frac{h}{\la}\right)^2+(r-s)^2)$ tends to
+$1/(r-s)$ which is a singular function. This means that the expression
+$\la L(r,s)$ is not well behaved for the small values of
+$h/\la$. Consequently, for the solution to converge, the integrals of
+(10) and (11) must be evaluated with a large number of
+nodes. In our numerical applications (cf. section 5), we
+use 100 nodes to evaluate these integrals. With the smallest value of
+$h/\la=0.02$, the convergence is good with $N=20$.
+}
+\Clear{426.79134pt}{%
+\noindent\textbf{Theorem 2.}\enspace\itshape
+For system (8), consensus can be achieved with
+$\|T_{\omega z}(s)\|_{\infty}<\gamma$ if there exist a symmetric
+positive definite
+ matrix $P\in \mathcal{R}^{(n-1)\times (n-1)}$ and a scalar $\mu>0$ satisfying
+\setcounter{equation}{9}
+\begin{eqnarray}\label{10}
+\Gamma=\begin{bmatrix}
+-\bar{L}^TP-P\bar{L}+U_1^TU_1+\mu \bar{E}&PU_1^TE_1&PU_1^T\\
+E_1^TU_1P&-\mu I&0\\ U_1P&0&-\gamma^2I\end{bmatrix}<0,
+\end{eqnarray}
+where $\bar{L}=U_1^TLU_1$ and $\bar{E}=U_1^TE_2^TE_2U_1.$
+}
+\Clear{426.79134pt}{%
+\noindent\textbf{Proof of Theorem 2.}\enspace Proof follows
+straightforward from Lemma 3 and Theorem 1. However, it should be
+emphasized that all possible $\bar{L}_{\sigma(t)}$ should share a
+common Lyapunov function $V(\delta)=\delta^T(t)P\delta(t)$ (see
+the proof of Lemma 3 in Appendix A). \hfill$\square$
+}
+\Clear{426.79134pt}{%
+ \begin{enumerate}[1.]
+ \item The enumerate environment starts with an optional
+   argument `1.' so that the item counter will be suffixed
+   by a period.
+ \item If you provide  parentheses to the number, the
+   output will have only one parentheses for all the item
+   counters.
+ \item You can use `(a)' for alphabetical counter and '(i)' for
+   roman counter.
+  \begin{enumerate}[a)]
+    \item Another level of list with alphabetical counter.
+    \item One more item before we start another.
+    \begin{enumerate}[(i)]
+     \item This item has roman numeral counter.
+     \item Another one before we close the third level.
+    \end{enumerate}
+    \item Third item in second level.
+  \end{enumerate}
+ \item All list items conclude with this step.
+\end{enumerate}
+}
+\Clear{284.52756pt}{%
+\lmrgn=4em
+ \begin{enumerate}[Step 1.]
+  \item This is the first step of the example list.
+\item Obviously this is the second step.
+\item The final step to wind up this example.
+ \end{enumerate}
+}
+\Clear{284.52756pt}{%
+\centering
+ {\ttfamily\bs includegraphics[width=3in,angle=45]\lb
+ tiger.pdf\rb}\\
+ \hspace*{-1cm}
+ \includegraphics[width=3in,angle=45,origin=c]{tiger.pdf}\\
+ \raggedright
+ \textbf{Fig.~1.}~~More details on the usage of {\ttfamily\bs
+ includegraphics} can be found in the \textsf{grfguide.ps} of the
+ \LaTeX{} documentation.
+}
+\Clear{426.79134pt}{%
+\raggedright
+\begin{enumerate}[{[1]}]
+\item Knuth, D.E., \emph{TeX: The Program}, Computers \&
+Typesetting; B., 1995, Addisson-Wesley Publishing Co., Inc., New
+York.
+\end{enumerate}
+}
