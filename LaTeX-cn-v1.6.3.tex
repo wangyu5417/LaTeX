@@ -1,0 +1,123 @@
+\documentclass[a4paper, zihao = -4, linespread = 1]{ctexart}
+
+\usepackage[normalem]{ulem} %下划线包
+\usepackage{lettrine} %首字下沉包
+\usepackage{indentfirst} %首行缩进包
+\usepackage{fontspec} %选择本地安装的字体包
+\usepackage{xcolor} %字体颜色包
+
+\renewcommand{\refname}{参考文献}
+\usepackage[numbers, sort&compress, super, square]{natbib}
+
+\usepackage[colorlinks, bookmarksopen = true, bookmarksnumbered = true]{hyperref} %标签引用包
+
+\begin{document}
+
+	Hello, world!
+	你好，世界！\par
+
+	\LaTeX{} Studio
+
+	$\backslash$ \textbackslash \texttt{\char92}
+
+	a $\sim$ b
+	a\~ b
+	a\~{} b
+	a\textasciitilde b
+
+	% 引号
+	``\thinspace `Max' is here.''
+
+	% 破折、省略号与短横
+	daughter-in-law
+	page 1--2
+	Listen---I'm serious.
+	\ldots %省略号
+
+	%下划线与删除线
+	\uline{下划线} \\
+	\uuline{双下划线} \\
+	\dashuline{虚下划线} \\
+	\dotuline{点下划线} \\
+	\uwave{波浪线} \\
+	\sout{删除线} \\
+	\xout{斜删除线}
+
+	% 角度和温度
+	$30\,^{\circ}$三角形 \\
+	$37\,^{\circ}\mathrm{C}$
+
+	% 千位分隔位
+	\mbox{1\,000\,000} % 防止断行
+
+	% 换行与分段
+	% 正文中想换行，直接使用两个回车
+	% 插入一个空白段落
+	第一段
+
+	\mbox{}
+
+	第二段 \par
+	第三段
+
+	% 段落之间的距离
+	\setlength{\parskip}{0pt}
+
+	% 首字下沉
+	\lettrine{T}{his} is an example. Hope you like this package, and enjoy your \LaTeX\ trip!
+
+	% 颜色设置
+	{\color{red!70} 百分之七十红色} \par
+	{\color{-red} 红色的互补色}
+
+	% 标签与引用
+	\section{质能公式\texorpdfstring{$E=mc^2$}{E=mc\textasciicircum 2}}
+
+	% 脚注
+	\footnote{This is a footnote.}
+
+	% 援引环境
+	鲁智深其师有偈言曰：
+	\begin{quote}
+	逢夏而擒，遇腊而执。
+	\end{quote}
+	圆寂之后，其留颂曰：
+	\begin{quotation}
+	平生不修善果，只爱杀人放火。
+	\end{quotation}
+
+	This is a sample text.\cite{author1.year1,author2.year2}
+	This is the text following the reference.
+
+	\begin{thebibliography}{99} % 99表示以最多两位数来编号，用于对齐
+		\addtolength{\itemsep}{-2ex} %用于更改行距
+		\bibitem{author1.year1}Au1. ArtName1[J]. JN1. Y1:1--2
+		\bibitem{author2.year2}Au2. ArtName2[J]. JN2. Y2:1--2
+	\end{thebibliography}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
