@@ -1,0 +1,17 @@
+# Fdb version 3
+["xdvipdfmx"] 1543420421 "科技论文入门.xdv" "科技论文入门.pdf" "科技论文入门" 1543420422
+  "科技论文入门.xdv" 1543420421 1904 1632da4354fc47916f33926438c5748a "xelatex"
+  (generated)
+  "科技论文入门.pdf"
+["xelatex"] 1543420420 "科技论文入门.tex" "科技论文入门.xdv" "科技论文入门" 1543420422
+  "/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls" 1523050425 19823 fcbc01552b07b608574cbf8e1977e0c0 ""
+  "/usr/local/texlive/2018/texmf-dist/tex/latex/base/size10.clo" 1523050425 8294 b0f177401f895563eb19304d2389582d ""
+  "/usr/local/texlive/2018/texmf-dist/web2c/texmf.cnf" 1522066949 33362 cf75436e19743e94a92a6b1b9183c434 ""
+  "/usr/local/texlive/2018/texmf-var/web2c/xetex/xelatex.fmt" 1529518665 3731934 0e1afef01fd91e92cdfc9df4a794b055 ""
+  "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
+  "科技论文入门.aux" 1543420421 8 a94a2480d3289e625eea47cd1b285758 ""
+  "科技论文入门.tex" 1543420419 360 830b06ff0f92e178ecfd002301784009 ""
+  (generated)
+  "科技论文入门.aux"
+  "科技论文入门.xdv"
+  "科技论文入门.log"

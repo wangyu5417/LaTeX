@@ -1,0 +1,15 @@
+PWD /Users/wangyu/Documents/GitHub/LaTeX/练习
+INPUT /usr/local/texlive/2018/texmf.cnf
+INPUT /usr/local/texlive/2018/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2018/texmf-var/web2c/xetex/xelatex.fmt
+INPUT 科技论文入门.tex
+OUTPUT 科技论文入门.log
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT 科技论文入门.aux
+INPUT 科技论文入门.aux
+OUTPUT 科技论文入门.aux
+OUTPUT 科技论文入门.xdv
+INPUT 科技论文入门.aux
