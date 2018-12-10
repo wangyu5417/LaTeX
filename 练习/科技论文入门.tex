@@ -1,6 +1,19 @@
-\documentclass{article} % 指定文档类型
+\documentclass[12pt,a4paper]{article}
+% 指定文档类型: article, book, beamer, ctexart, ctexbook, ctexbeamer
+% 常用选项：
+%    - 10pt（缺省值），11pt，12pt：指定基本字体大小
+%    - letterpaper（缺省值），a4paper，a5paper：指定纸张的大小
+%    - 单双面选项：oneside，twoside，openright，openany
+%    - 数学公式：leqno（公式编号在左边），fleqn（靠左显示行间公式）
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 导言区：全局设置，宏包调用等
-%
+
+\usepackage{amsmath} % AMS 数学公式
+\usepackage{amssymb} % AMS 数学符号
+\usepackage{amsfonts} % AMS 数学字体
+\usepackage{graphicx} % 插图
+\usepackage{xcolor} % 彩色
 
 \begin{document}
 % 正文部分
@@ -10,8 +23,27 @@ Hi, this is my first \LaTeX{} file.
 % 分组
 % 可用大括号（即分组）限制声明的范围
 This is \textbf{bold face} style. \par
-This is \bfseries bold face style. \par 
+This is \bfseries bold face style. \par
 This is {\bfseries bold face} style.
+
+
+% 换行：自然换行（若强制，可用\\或\linebreak)
+% 分段：一个空行或\par，建议用空行分段，简洁美观
+% 分页：自然分页（若强制，可用\newpage, \clearpage 或\pagebreak）
+
+
+
+
+
+
+
+
+
+
+
+
+The Euler equation is given by
+$$ e^{ix} \triangleq \cos{x} + i\sin(x). $$
 
 
 \end{document}
